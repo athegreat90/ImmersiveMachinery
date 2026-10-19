@@ -30,9 +30,25 @@ dependencies {
 
 processResources {
     def properties = [version: project.version, minecraft_version_range: minecraft_version_range,
-                      neoforge_version: neoforge_version]
+                      neoforge_version: neoforge_version,
+                      immersive_aircraft_version: immersive_aircraft_version]
     inputs.properties properties
     filesMatching("META-INF/neoforge.mods.toml") {
         expand properties
     }
+}
+
+// A separate diagnostic mod for disposable servers, never part of either
+// runtime artifact. It supplies real levels for world-dependent regressions.
+sourceSets {
+    portTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+tasks.register("portTestJar", Jar) {
+    archiveBaseName = "local-port-server-checks"
+    from sourceSets.portTest.output
+    from(rootProject.file("LICENSE"))
 }

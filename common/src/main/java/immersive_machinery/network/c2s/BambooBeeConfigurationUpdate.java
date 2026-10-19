@@ -2,6 +2,7 @@ package immersive_machinery.network.c2s;
 
 import immersive_aircraft.cobalt.network.Message;
 import immersive_aircraft.cobalt.network.NetworkHandler;
+import immersive_aircraft.screen.VehicleScreenHandler;
 import immersive_machinery.network.s2c.BambooBeeConfigurationSync;
 import immersive_machinery.entity.BambooBee;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -44,7 +45,13 @@ public class BambooBeeConfigurationUpdate extends Message {
     }
 
     public void receiveServer(ServerPlayer e) {
-        read(e.level().getEntity(id));
+        Entity entity = e.level().getEntity(id);
+        if (!(entity instanceof BambooBee bee) || e.hasDisconnected() || !e.isAlive()
+                || !(e.containerMenu instanceof VehicleScreenHandler menu)
+                || menu.getVehicle() != bee || !menu.stillValid(e)) {
+            return;
+        }
+        read(bee);
 
         // Update other players
         for (Player player : e.level().players()) {

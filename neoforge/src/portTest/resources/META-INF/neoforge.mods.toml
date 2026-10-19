@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="GPL-3.0-only"
+[[mods]]
+modId="local_port_server_checks"
+version="1"
+displayName="Private 26.3 server regression checks"
+description="Only for disposable port validation. Do not install on a production server."
+[[dependencies.local_port_server_checks]]
+modId="immersive_aircraft"
+type="required"
+versionRange="[1.7.0+26.3-local]"
+ordering="AFTER"
+side="SERVER"
+[[dependencies.local_port_server_checks]]
+modId="immersive_machinery"
+type="required"
+versionRange="[0.2.3+26.3-local]"
+ordering="AFTER"
+side="SERVER"

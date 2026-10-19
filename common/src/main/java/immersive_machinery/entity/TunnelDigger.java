@@ -68,7 +68,7 @@ public class TunnelDigger extends MachineEntity {
         if (!isVehicle()) {
             drillY = 0;
             drilling = false;
-        } else if (drilling) {
+        } else if (drilling && (level().isClientSide() || getEnginePower() > 0.1f)) {
             drillPower = Math.min(drillPower + getDrillSpeed() / 20.0f, 1.0f);
 
             if (drillPower > 0 && level() instanceof ServerLevel level) {

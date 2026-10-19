@@ -23,14 +23,14 @@ side = "BOTH"
 [[dependencies.immersive_machinery]]
 modId = "neoforge"
 type = "required"
-versionRange = "[${neoforge_version},)"
+versionRange = "[${neoforge_version},26.4)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersive_machinery]]
 modId = "immersive_aircraft"
 type = "required"
-versionRange = "[1.6.0,)"
+versionRange = "[${immersive_aircraft_version}]"
 ordering = "AFTER"
 side = "BOTH"
 

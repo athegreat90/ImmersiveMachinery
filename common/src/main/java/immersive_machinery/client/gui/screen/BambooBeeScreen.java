@@ -8,7 +8,7 @@ import immersive_machinery.client.gui.screen.widgets.LegacyImageButton;
 import immersive_machinery.client.gui.screen.widgets.ToggleImageButton;
 import immersive_machinery.entity.BambooBee;
 import immersive_machinery.network.c2s.BambooBeeConfigurationUpdate;
-import net.minecraft.util.Util;
+import com.mojang.blaze3d.Blaze3D;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -45,12 +45,12 @@ public class BambooBeeScreen extends VehicleScreen {
 
     @Override
     public void onClose() {
-        super.onClose();
-
         BambooBee.Configuration c = bee.getConfiguration();
         if (c.isDirty()) {
             NetworkHandler.sendToServer(new BambooBeeConfigurationUpdate(bee));
         }
+        // Keep the server-owned menu open until its validated update is queued.
+        super.onClose();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class BambooBeeScreen extends VehicleScreen {
 
     private void openHelp() {
         try {
-            Util.getPlatform().openUri(URI.create("https://github.com/Luke100000/ImmersiveMachinery/wiki/Bamboo-Bee"));
+            Blaze3D.openUri(URI.create("https://github.com/Luke100000/ImmersiveMachinery/wiki/Bamboo-Bee"));
         } catch (Exception e) {
             Common.LOGGER.error("Failed to open help page", e);
         }

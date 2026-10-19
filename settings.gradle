@@ -12,4 +12,12 @@ plugins {
 }
 
 rootProject.name = "immersive-machinery"
-include("common", "fabric", "neoforge")
+include("common", "neoforge")
+
+// Both API consumers use the actual local 26.3 NeoForge project, including
+// common's compile-only classpath. No Fabric binary or remote publication.
+includeBuild("../ImmersiveAircraft") {
+    dependencySubstitution {
+        substitute module("net.conczin:immersive_aircraft") using project(":neoforge")
+    }
+}

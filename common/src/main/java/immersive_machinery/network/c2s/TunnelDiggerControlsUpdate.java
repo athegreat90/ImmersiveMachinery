@@ -5,6 +5,7 @@ import immersive_machinery.entity.TunnelDigger;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 
 public class TunnelDiggerControlsUpdate extends Message {
     private final int drillY;
@@ -28,7 +29,10 @@ public class TunnelDiggerControlsUpdate extends Message {
 
     @Override
     public void receive(Player e) {
-        if (e.getRootVehicle() instanceof TunnelDigger entity) {
+        if (e instanceof ServerPlayer player && !player.hasDisconnected() && player.isAlive()
+                && !player.isRemoved() && drillY >= -1 && drillY <= 1
+                && player.getVehicle() instanceof TunnelDigger entity
+                && entity.isAlive() && entity.getControllingPassenger() == player) {
             entity.drillY = drillY;
             entity.drilling = drilling;
         }

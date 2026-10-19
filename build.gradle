@@ -1,5 +1,4 @@
 plugins {
-    id "net.fabricmc.fabric-loom" version "${fabric_loom_version}" apply false
     id "net.neoforged.moddev" version "${neoforge_moddev_version}" apply false
 }
 
@@ -20,7 +19,7 @@ def getAppVersion = { ->
 
 allprojects {
     group = rootProject.group_id
-    version = getAppVersion()
+    version = rootProject.findProperty("local_port_version") ?: getAppVersion()
 }
 
 subprojects {
